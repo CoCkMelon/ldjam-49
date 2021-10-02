@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://cube.glb" type="PackedScene" id=2]
+[ext_resource path="res://benot.glb" type="PackedScene" id=3]
+[ext_resource path="res://betonGirl.glb" type="PackedScene" id=4]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="BoxShape" id=2]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="benot" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33562, -3.09646, -7.2782 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.618711, 1.9674, -22.0339 )
+target = NodePath("../Player/CamTarget")
+speed = 10.0
+enabled = true
+
+[node name="Player" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.618711, 1.9674, -6.03358 )
+script = ExtResource( 1 )
+
+[node name="CamTarget" type="Spatial" parent="Player"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.76837e-07, 2.14572, -15.6642 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.596418, -0.0081048, -0.656625 )
+shape = SubResource( 1 )
+
+[node name="betonGirl" parent="Player/CollisionShape" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.596418, 0.0081048, 0.656625 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 0.1, 0, 0, 0, 100, 0, 0, 0, 1000, -1.32348, -100.026, -1.39842 )
+shape = SubResource( 2 )
+
+[node name="cube" parent="StaticBody/CollisionShape" instance=ExtResource( 2 )]
+
+[node name="spawn" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.15333, 15.087, 0 )
